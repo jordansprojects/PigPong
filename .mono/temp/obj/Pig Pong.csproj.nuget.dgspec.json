@@ -1,0 +1,53 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/jordan/Desktop/Godot Creations/PigPong/Pig Pong.csproj": {}
+  },
+  "projects": {
+    "/home/jordan/Desktop/Godot Creations/PigPong/Pig Pong.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/jordan/Desktop/Godot Creations/PigPong/Pig Pong.csproj",
+        "projectName": "Pig Pong",
+        "projectPath": "/home/jordan/Desktop/Godot Creations/PigPong/Pig Pong.csproj",
+        "packagesPath": "/home/jordan/.nuget/packages/",
+        "outputPath": "/home/jordan/Desktop/Godot Creations/PigPong/.mono/temp/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/jordan/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net472"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net472": {
+            "targetAlias": "net472",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net472": {
+          "targetAlias": "net472",
+          "dependencies": {
+            "Microsoft.NETFramework.ReferenceAssemblies": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.0.3, )",
+              "autoReferenced": true
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.101/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

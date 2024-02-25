@@ -1,0 +1,9 @@
+/home/jordan/Desktop/Godot Creations/PigPong/.mono/temp/obj/Debug/Pig Pong.csproj.AssemblyReference.cache
+/home/jordan/Desktop/Godot Creations/PigPong/.mono/temp/obj/Debug/Pig Pong.GeneratedMSBuildEditorConfig.editorconfig
+/home/jordan/Desktop/Godot Creations/PigPong/.mono/temp/obj/Debug/Pig Pong.AssemblyInfoInputs.cache
+/home/jordan/Desktop/Godot Creations/PigPong/.mono/temp/obj/Debug/Pig Pong.AssemblyInfo.cs
+/home/jordan/Desktop/Godot Creations/PigPong/.mono/temp/obj/Debug/Pig Pong.csproj.CoreCompileInputs.cache
+/home/jordan/Desktop/Godot Creations/PigPong/.mono/temp/bin/Debug/Pig Pong.dll
+/home/jordan/Desktop/Godot Creations/PigPong/.mono/temp/bin/Debug/Pig Pong.pdb
+/home/jordan/Desktop/Godot Creations/PigPong/.mono/temp/obj/Debug/Pig Pong.dll
+/home/jordan/Desktop/Godot Creations/PigPong/.mono/temp/obj/Debug/Pig Pong.pdb
