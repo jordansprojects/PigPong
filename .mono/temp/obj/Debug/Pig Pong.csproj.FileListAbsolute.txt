@@ -7,3 +7,4 @@
 /home/jordan/Desktop/Godot Creations/PigPong/.mono/temp/bin/Debug/Pig Pong.pdb
 /home/jordan/Desktop/Godot Creations/PigPong/.mono/temp/obj/Debug/Pig Pong.dll
 /home/jordan/Desktop/Godot Creations/PigPong/.mono/temp/obj/Debug/Pig Pong.pdb
+/home/jordan/Desktop/Godot Creations/PigPong/.mono/temp/obj/Debug/Pig Pong.sourcelink.json
