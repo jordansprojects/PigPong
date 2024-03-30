@@ -1,58 +1,95 @@
 using Godot;
 using System;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Drawing;
 
-public class PlayPong : KinematicBody2D
+public class PlayPong : Node2D
 {
-    private const int LEEWAY = 100;
-    private const int CENTER_X  = 525;  
-    private const int LEFT_BOUNDARY =  CENTER_X - LEEWAY;
-    private const int RIGHT_BOUNDARY = CENTER_X + LEEWAY;
-    private KinematicBody2D paddle;
-    private AnimatedSprite paddleSprite;
+   private KinematicBody2D paddle;
+   private KinematicBody2D centerPaddle;
 
-    // Called when the node enters the scene tree for the first time.
-    public override void _Ready(){
-        // store paddle and paddle collider so that it can be moved
-        paddle =  GetNode<KinematicBody2D>("Paddle");
-        paddleSprite = GetNode<AnimatedSprite>("Paddle/Paddlesprite");
-    }
+   private int current = (int)Constants.Pigs.PURPLE;
+   private int left, right;
 
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-  public override void _Process(float delta){
-    /* use GlobalPosition so that placement does not rely on parent node */
-	 Vector2 mousePos =   GetViewport().GetMousePosition();
+   AnimatedSprite pigCenterAnim, pigLeftAnim, pigRightAnim, paddleSprite;
+   // Called when the node enters the scene tree for the first time.
+   public override void _Ready()
+   {
+      getNodeReferences();
+      left = current + 2;
+      right = current + 1;
 
-    GD.Print("Mouse x : "  + mousePos.x );
-    GD.Print("Right Boundary : " + RIGHT_BOUNDARY);
-    GD.Print("Left Boundary : " + LEFT_BOUNDARY);
+   }
 
-     bool isCenter = (mousePos.x < RIGHT_BOUNDARY) && (mousePos.x > LEFT_BOUNDARY);
+   //  // Called every frame. 'delta' is the elapsed time since the previous frame.
+   public override void _Process(float delta)
+   {
+      controlPaddle();
+      if(pigSelectHandler() == true){
+         changePigAnims();
+      }
+   }
 
-      if (isCenter){
-         GD.Print("Hiding");
-         // paddleSprite.Hide();
+   private void changePigAnims(){
+      pigLeftAnim.Play(Constants.PIG_STRINGS[left]);
+      pigRightAnim.Play(Constants.PIG_STRINGS[right]);
+      pigCenterAnim.Play(Constants.PIG_STRINGS[current]);
+      paddleSprite.Play(Constants.PIG_STRINGS[current]);
+      paddleSprite.Stop(); // Comment this out if you think the paddle animation on loop is cute
+   }
+
+   private bool pigSelectHandler(){
+      bool leftPressed = Input.IsActionJustPressed("ui_left");
+      bool rightPressed = Input.IsActionJustPressed("ui_right");
+      if (leftPressed || rightPressed){
+         int shiftAmount = 0;
+         if (leftPressed) {
+            shiftAmount = 2;
+         }
+         if (rightPressed){
+            shiftAmount = 1;
+         }
+         current = (current + shiftAmount) % Constants.NUM_PIGS;
+         left = (left + shiftAmount) % Constants.NUM_PIGS;
+         right = (right + shiftAmount) % Constants.NUM_PIGS;
+         return true;
+      }
+      return false;
+   }
+
+   private void controlPaddle(){
+      /* use GlobalPosition so that placement does not rely on parent node */
+      Vector2 mousePos = GetViewport().GetMousePosition();
+      bool isCenter = (mousePos.x < Constants.RIGHT_BOUNDARY) && (mousePos.x > Constants.LEFT_BOUNDARY);
+
+      if (isCenter)
+      {
          paddle.Hide();
-      }else{
+         centerPaddle.Show();
+      }
+      else
+      {
          paddle.Show();
-     bool shouldFlip = (mousePos.x < GlobalPosition.x && Scale.x > 0 || mousePos.x > GlobalPosition.x && Scale.x < 0 );
-     if(shouldFlip){        // flip if the cursor is on the side of the player that the player isnt facing
-        Scale = new Vector2(Scale.x * -1, Scale.y);
-     }
+         centerPaddle.Hide();
+         bool shouldFlip = mousePos.x < GlobalPosition.x && Scale.x > 0 || mousePos.x > GlobalPosition.x && Scale.x < 0;
+
+         if (shouldFlip)
+         {        // flip if the cursor is on the side of the player that the player isnt facing
+            Scale = new Vector2(Scale.x * -1, Scale.y);
+         }
       }
 
-    // credits : https://gamefromscratch.com/gamedev-math-recipes-rotating-to-face-a-point/
-     /*float angle = (float)(Math.Atan2(mousePos.y - GlobalPosition.y , mousePos.x - GlobalPosition.x));
-     angle = (float)(angle * ( 180 / Math.PI ));
-      
+   }
 
-     if(angle < 0 ){
-        angle = 360 - (-angle);
-     }
-     RotationDegrees = (90.0f + angle) ;
-     */
-  }
+   private void getNodeReferences(){
+      paddle = GetNode<KinematicBody2D>("Paddle");
+      centerPaddle = GetNode<KinematicBody2D>("CenterPaddle");
+      pigLeftAnim = GetNode<AnimatedSprite>("../SeatedPigLeft");
+      pigRightAnim = GetNode<AnimatedSprite>("../SeatedPigRight");
+      pigCenterAnim = GetNode<AnimatedSprite>("Pigsprite");
+      paddleSprite = GetNode<AnimatedSprite>("Paddle/PaddleSprite");
 
+   }
 
-}
+} // End of PlayPong class
