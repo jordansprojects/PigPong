@@ -1,8 +1,9 @@
-using System;
+using Godot;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("PlayPong")]
+[assembly: InternalsVisibleTo("Ball")]
 public class Constants{
 
 /* PIG CONSTANTS */
@@ -31,7 +32,12 @@ public class Constants{
    internal const float BOUNCE_MAGNITUDE = 0.5f;
    internal const int BOUNCE_THRESHOLD = 15;
 
-
+   /* BALL CONSTANTS */
+   internal const int SERVE_MAGNITUDE = 35;
+   internal const int BOUNCE_OFF_CIELING_MAGNITUDE = 25;
+   internal const int CIELING_Y = 30;
+   // used in PlayPong.cs when setting anchor constants
+   internal static Vector2 ANCHOR_OFFSET = new Vector2(0, -25);
 
 
 

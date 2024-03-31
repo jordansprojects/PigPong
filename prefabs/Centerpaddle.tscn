@@ -24,7 +24,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[node name="CenterPaddle" type="KinematicBody2D"]
+[node name="CenterPaddle" type="Area2D"]
 position = Vector2( 508, 141 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

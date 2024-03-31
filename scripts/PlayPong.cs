@@ -1,14 +1,9 @@
 using Godot;
-using System;
-using System.Collections.Concurrent;
-using System.Diagnostics;
-using System.Drawing;
 
 public class PlayPong : Node2D
 {
-   private KinematicBody2D paddle;
-   private KinematicBody2D centerPaddle;
-
+   private Area2D paddle, centerPaddle;
+   private Ball ball;
    private int current = (int)Constants.Pigs.PURPLE;
    private int left, right;
 
@@ -17,8 +12,13 @@ public class PlayPong : Node2D
    public override void _Ready()
    {
       getNodeReferences();
+      
+      // set pig indicies 
       left = current + 2;
       right = current + 1;
+      
+      // ensure pigs begin with proper sprite selected
+      changePigAnims(); 
 
    }
 
@@ -65,17 +65,17 @@ public class PlayPong : Node2D
 
       if (isCenter)
       {
-         paddle.Hide();
-         centerPaddle.Show();
+         disablePaddle(paddle);
+         enablePaddle(centerPaddle);
+        
       }
       else
       {
-         paddle.Show();
-         centerPaddle.Hide();
+         enablePaddle(paddle);
+         disablePaddle(centerPaddle);
+         // flip if the cursor is on the side of the player that the player isnt facing
          bool shouldFlip = mousePos.x < GlobalPosition.x && Scale.x > 0 || mousePos.x > GlobalPosition.x && Scale.x < 0;
-
-         if (shouldFlip)
-         {        // flip if the cursor is on the side of the player that the player isnt facing
+         if (shouldFlip){ 
             Scale = new Vector2(Scale.x * -1, Scale.y);
          }
       }
@@ -83,13 +83,25 @@ public class PlayPong : Node2D
    }
 
    private void getNodeReferences(){
-      paddle = GetNode<KinematicBody2D>("Paddle");
-      centerPaddle = GetNode<KinematicBody2D>("CenterPaddle");
+      paddle = GetNode<Area2D>("Paddle");
+      centerPaddle = GetNode<Area2D>("CenterPaddle");
       pigLeftAnim = GetNode<AnimatedSprite>("../SeatedPigLeft");
       pigRightAnim = GetNode<AnimatedSprite>("../SeatedPigRight");
       pigCenterAnim = GetNode<AnimatedSprite>("Pigsprite");
       paddleSprite = GetNode<AnimatedSprite>("Paddle/PaddleSprite");
+      ball = GetNode<RigidBody2D>("../Ball") as Ball;
+   }
 
+   private void disablePaddle(Area2D paddleObj){
+      paddleObj.Hide();
+      paddleObj.GetNode<CollisionShape2D>("CollisionShape2D").SetDeferred("disabled", true);
+   }
+
+
+   private void enablePaddle(Area2D paddleObj){
+      paddleObj.Show();
+      paddleObj.GetNode<CollisionShape2D>("CollisionShape2D").SetDeferred("disabled", false);
+      ball.anchor = paddleObj.GlobalPosition + Constants.ANCHOR_OFFSET;
    }
 
 } // End of PlayPong class
