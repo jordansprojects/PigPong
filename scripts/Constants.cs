@@ -6,6 +6,11 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("Ball")]
 public class Constants{
 
+   internal const int VIEWPORT_WIDTH = 1200;
+   internal const int VIEWPORT_HEIGHT = 600;
+   
+   internal const int VIEWPORT_MIN = 0;
+
 /* PIG CONSTANTS */
    const int LEEWAY = 100;
    internal const int CENTER_X = 525;
@@ -38,6 +43,10 @@ public class Constants{
    internal const int CIELING_Y = 30;
    // used in PlayPong.cs when setting anchor constants
    internal static Vector2 ANCHOR_OFFSET = new Vector2(0, -25);
+
+   internal const float TINIEST_BALL = 0.15f;
+   internal const float LARGEST_BALL = 0.5f;
+
 
 
 

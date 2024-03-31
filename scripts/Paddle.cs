@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 public class Paddle : Area2D
 {
     internal Vector2 direction = Vector2.Up;
-    internal int magnitude = 55;
+    internal int magnitude = 75;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready(){
