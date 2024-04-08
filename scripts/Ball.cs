@@ -11,7 +11,7 @@ public class Ball : RigidBody2D
     internal float z = 1; 
     internal Vector2 anchor;
     private bool playersServe = true; 
-    private bool isServed, isHittable, hadFirstHit;
+    internal bool isServed, isHittable, hadFirstHit;
     private float prevY ;
 
     
@@ -53,16 +53,18 @@ public class Ball : RigidBody2D
         if(GlobalPosition.y < Constants.CIELING_Y){
             GD.Print("Bouncing off the cieling");
             ApplyCentralImpulse(Vector2.Down * Constants.BOUNCE_OFF_CIELING_MAGNITUDE);
+            isHittable = true;
         }
     }
     private void beServed(){
         GD.Print("Ball is being served");
         // apply impulse before ball can be hit by other objects
         isServed = true;
+        isHittable = false;
         hadFirstHit = false;
         LinearVelocity = Vector2.Zero;
         ApplyCentralImpulse(Vector2.Up * Constants.SERVE_MAGNITUDE);
-        isHittable = true;
+
 
        
     }
@@ -70,8 +72,8 @@ public class Ball : RigidBody2D
     internal void getHit(Vector2 impulseToApply, int mag){
         if (isHittable){
             LinearVelocity = Vector2.Zero;
-            GD.Print("Ball is Hit!");
-            ApplyCentralImpulse(impulseToApply * mag);
+            GD.Print("Hitting ball in direction :" + impulseToApply);
+            ApplyCentralImpulse(impulseToApply * mag );
             hadFirstHit = true;
         }
     }
@@ -99,6 +101,20 @@ public class Ball : RigidBody2D
         anim.Scale = new Vector2(1,1) * scalingFactor ;
         collider.Scale = new Vector2(1,1) * scalingFactor ;
     }
+
+
+ internal void disableBall(){
+      Hide();
+      GetNode<CollisionShape2D>("CollisionShape2D").SetDeferred("disabled", true);
+
+   }
+
+
+   internal void enableBall(){
+      Show();
+      GetNode<CollisionShape2D>("CollisionShape2D").SetDeferred("disabled", false);
+   }
+
 
 
 } // end of Ball class

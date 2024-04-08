@@ -8,8 +8,8 @@ public class Constants{
 
    internal const int VIEWPORT_WIDTH = 1200;
    internal const int VIEWPORT_HEIGHT = 600;
-   
    internal const int VIEWPORT_MIN = 0;
+
 
 /* PIG CONSTANTS */
    const int LEEWAY = 100;
@@ -28,7 +28,14 @@ public class Constants{
     internal static List<string> PIG_STRINGS = new List<string> { "Purple", "Super", "Skull" };
 
 
+   internal const int LANE_DEST_Y = 210;
+   internal const int LANE_DEST_START_X = 450;
+   internal const int LANE_PADDING = 50;
 
+   internal static Vector2 LEFT_LANE = new Vector2(LANE_DEST_START_X, LANE_DEST_Y);
+   internal static Vector2  CENTER_LANE = new Vector2(LEFT_LANE.x + LANE_PADDING, LANE_DEST_Y);
+   internal static Vector2 RIGHT_LANE = new Vector2(CENTER_LANE.x + LANE_PADDING, LANE_DEST_Y);
+ 
    /* WOLF CONSTANTS */
    const int BOUNDARY_BUFFER = 80;
    internal const int STOP_LEFT = LEFT_BOUNDARY + BOUNDARY_BUFFER;
@@ -42,7 +49,9 @@ public class Constants{
    internal const int BOUNCE_OFF_CIELING_MAGNITUDE = 25;
    internal const int CIELING_Y = 30;
    // used in PlayPong.cs when setting anchor constants
-   internal static Vector2 ANCHOR_OFFSET = new Vector2(0, -25);
+   internal const int ANCHOR_OFFSET_Y = -25;
+   internal static Vector2 ANCHOR_OFFSET = new Vector2(0, ANCHOR_OFFSET_Y);
+
 
    internal const float TINIEST_BALL = 0.15f;
    internal const float LARGEST_BALL = 0.5f;

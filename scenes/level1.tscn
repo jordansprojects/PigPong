@@ -196,7 +196,7 @@ scale = Vector2( 0.536458, 0.558333 )
 texture = ExtResource( 3 )
 
 [node name="Table" type="Sprite" parent="."]
-position = Vector2( 522.5, 320 )
+position = Vector2( 521, 318 )
 scale = Vector2( 0.631771, 0.559259 )
 z_index = 1
 texture = ExtResource( 2 )
@@ -221,17 +221,14 @@ scale = Vector2( 0.7, 0.7 )
 script = ExtResource( 6 )
 
 [node name="Pigsprite" type="AnimatedSprite" parent="Pig"]
-position = Vector2( 4.2857, -75.7143 )
+position = Vector2( -2.85718, -82.8571 )
 z_index = 5
 frames = SubResource( 3 )
 animation = "Super"
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="Paddle" type="Area2D" parent="Pig"]
 position = Vector2( 227.143, -87.1428 )
-z_index = 2
+z_as_relative = false
 collision_layer = 3
 collision_mask = 3
 script = ExtResource( 12 )
@@ -255,6 +252,9 @@ position = Vector2( 28.5714, -252.857 )
 z_index = 4
 collision_mask = 2
 script = ExtResource( 12 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="SeatedPigLeft" type="AnimatedSprite" parent="."]
 position = Vector2( 182, 457 )
@@ -289,7 +289,7 @@ __meta__ = {
 }
 
 [node name="Ball" type="RigidBody2D" parent="."]
-position = Vector2( 389, 53 )
+position = Vector2( 519, 197 )
 z_index = 3
 collision_layer = 2
 collision_mask = 2

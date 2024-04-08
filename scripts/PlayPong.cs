@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 public class PlayPong : Node2D
@@ -19,6 +20,7 @@ public class PlayPong : Node2D
       
       // ensure pigs begin with proper sprite selected
       changePigAnims(); 
+      (centerPaddle as Paddle).setDirection((Constants.CENTER_LANE- GlobalPosition).Normalized());
 
    }
 
@@ -59,17 +61,19 @@ public class PlayPong : Node2D
    }
 
    private void controlPaddle(){
+      
       /* use GlobalPosition so that placement does not rely on parent node */
       Vector2 mousePos = GetViewport().GetMousePosition();
-      bool isCenter = (mousePos.x < Constants.RIGHT_BOUNDARY) && (mousePos.x > Constants.LEFT_BOUNDARY);
 
-      if (isCenter)
-      {
+      // first determine whether the paddle is in the center lane, this simplifies the options
+      bool isCenter = (mousePos.x < Constants.RIGHT_BOUNDARY) && (mousePos.x > Constants.LEFT_BOUNDARY);
+      Vector2 hitDirection = Constants.CENTER_LANE;
+
+      if (isCenter && (Constants.Pigs)current != Constants.Pigs.SKULL) {
          disablePaddle(paddle);
          enablePaddle(centerPaddle);
-        
       }
-      else
+      else if( (Constants.Pigs)current != Constants.Pigs.SUPER)
       {
          enablePaddle(paddle);
          disablePaddle(centerPaddle);
@@ -78,9 +82,31 @@ public class PlayPong : Node2D
          if (shouldFlip){ 
             Scale = new Vector2(Scale.x * -1, Scale.y);
          }
+         bool isLeft = mousePos.x < Constants.RIGHT_BOUNDARY;
+         switch( (Constants.Pigs) current ){
+            case Constants.Pigs.SKULL:
+               if(isLeft){
+                  hitDirection = Constants.RIGHT_LANE;
+               }else{
+                  hitDirection = Constants.LEFT_LANE;
+               }
+               break;
+            case Constants.Pigs.PURPLE:
+            if(isLeft){
+                  hitDirection = Constants.LEFT_LANE;
+               }else{
+                  hitDirection = Constants.RIGHT_LANE;  
+               }
+               break;
+         }
       }
+      (paddle as Paddle).setDirection((hitDirection - paddle.GlobalPosition).Normalized());
+
 
    }
+
+
+
 
    private void getNodeReferences(){
       paddle = GetNode<Area2D>("Paddle");
@@ -93,15 +119,23 @@ public class PlayPong : Node2D
    }
 
    private void disablePaddle(Area2D paddleObj){
+      // Hide ball when disabling paddle to reduce glitching appearance when moving paddle & before a serve
+      if(ball.isServed == false){ 
+         ball.disableBall();
+      }
       paddleObj.Hide();
       paddleObj.GetNode<CollisionShape2D>("CollisionShape2D").SetDeferred("disabled", true);
+
    }
 
 
    private void enablePaddle(Area2D paddleObj){
-      paddleObj.Show();
       paddleObj.GetNode<CollisionShape2D>("CollisionShape2D").SetDeferred("disabled", false);
+      paddleObj.Show();
+
       ball.anchor = paddleObj.GlobalPosition + Constants.ANCHOR_OFFSET;
+      ball.enableBall();
    }
+
 
 } // End of PlayPong class
