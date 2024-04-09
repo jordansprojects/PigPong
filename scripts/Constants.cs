@@ -29,7 +29,7 @@ public class Constants{
 
 
    internal const int LANE_DEST_Y = 210;
-   internal const int LANE_DEST_START_X = 450;
+   internal const int LANE_DEST_START_X = 350;
    internal const int LANE_PADDING = 50;
 
    internal static Vector2 LEFT_LANE = new Vector2(LANE_DEST_START_X, LANE_DEST_Y);

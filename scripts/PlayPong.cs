@@ -55,6 +55,7 @@ public class PlayPong : Node2D
          current = (current + shiftAmount) % Constants.NUM_PIGS;
          left = (left + shiftAmount) % Constants.NUM_PIGS;
          right = (right + shiftAmount) % Constants.NUM_PIGS;
+
          return true;
       }
       return false;
@@ -67,13 +68,16 @@ public class PlayPong : Node2D
 
       // first determine whether the paddle is in the center lane, this simplifies the options
       bool isCenter = (mousePos.x < Constants.RIGHT_BOUNDARY) && (mousePos.x > Constants.LEFT_BOUNDARY);
+      bool isNotExcludedFromCenter = (Constants.Pigs)current != Constants.Pigs.SKULL ;
+      bool isForcedToCenter = (Constants.Pigs)current == Constants.Pigs.SUPER;
+
       Vector2 hitDirection = Constants.CENTER_LANE;
 
-      if (isCenter && (Constants.Pigs)current != Constants.Pigs.SKULL) {
+      if (isCenter && isNotExcludedFromCenter || isForcedToCenter) {
          disablePaddle(paddle);
          enablePaddle(centerPaddle);
       }
-      else if( (Constants.Pigs)current != Constants.Pigs.SUPER)
+      else
       {
          enablePaddle(paddle);
          disablePaddle(centerPaddle);
