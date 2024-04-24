@@ -62,7 +62,6 @@ public class PlayPong : Node2D
    }
 
    private void controlPaddle(){
-      
       /* use GlobalPosition so that placement does not rely on parent node */
       Vector2 mousePos = GetViewport().GetMousePosition();
 
@@ -70,15 +69,11 @@ public class PlayPong : Node2D
       bool isCenter = (mousePos.x < Constants.RIGHT_BOUNDARY) && (mousePos.x > Constants.LEFT_BOUNDARY);
       bool isNotExcludedFromCenter = (Constants.Pigs)current != Constants.Pigs.SKULL ;
       bool isForcedToCenter = (Constants.Pigs)current == Constants.Pigs.SUPER;
-
-      Vector2 hitDirection = Constants.CENTER_LANE;
-
       if (isCenter && isNotExcludedFromCenter || isForcedToCenter) {
          disablePaddle(paddle);
          enablePaddle(centerPaddle);
       }
-      else
-      {
+      else{
          enablePaddle(paddle);
          disablePaddle(centerPaddle);
          // flip if the cursor is on the side of the player that the player isnt facing
@@ -86,28 +81,41 @@ public class PlayPong : Node2D
          if (shouldFlip){ 
             Scale = new Vector2(Scale.x * -1, Scale.y);
          }
+         configureHitDirection(mousePos, isCenter);
+         }
+   }
+
+   /*
+      controlPaddle helper function
+   */
+   private void configureHitDirection(Vector2 mousePos, bool isCenter){
+      Vector2 hitDirection = Constants.CENTER_LANE;
          bool isLeft = mousePos.x < Constants.RIGHT_BOUNDARY;
-         switch( (Constants.Pigs) current ){
-            case Constants.Pigs.SKULL:
+         switch( current ){
+            case (int)Constants.Pigs.SKULL:
                if(isLeft){
                   hitDirection = Constants.RIGHT_LANE;
                }else{
                   hitDirection = Constants.LEFT_LANE;
                }
                break;
-            case Constants.Pigs.PURPLE:
+            case (int)Constants.Pigs.PURPLE:
             if(isLeft){
                   hitDirection = Constants.LEFT_LANE;
-               }else{
+            }else if (!isCenter && !isLeft) {
                   hitDirection = Constants.RIGHT_LANE;  
                }
                break;
+            case (int)Constants.Pigs.SUPER:
+            // Select random hit direction
+
+            break;
          }
+         (paddle as Paddle).setDirection((hitDirection - paddle.GlobalPosition).Normalized());
       }
-      (paddle as Paddle).setDirection((hitDirection - paddle.GlobalPosition).Normalized());
+      
 
-
-   }
+   
 
 
 

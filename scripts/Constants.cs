@@ -29,8 +29,8 @@ public class Constants{
 
 
    internal const int LANE_DEST_Y = 210;
-   internal const int LANE_DEST_START_X = 350;
-   internal const int LANE_PADDING = 50;
+   internal const int LANE_DEST_START_X = 430;
+   internal const int LANE_PADDING = 70;
 
    internal static Vector2 LEFT_LANE = new Vector2(LANE_DEST_START_X, LANE_DEST_Y);
    internal static Vector2  CENTER_LANE = new Vector2(LEFT_LANE.x + LANE_PADDING, LANE_DEST_Y);
@@ -53,7 +53,7 @@ public class Constants{
    internal static Vector2 ANCHOR_OFFSET = new Vector2(0, ANCHOR_OFFSET_Y);
 
 
-   internal const float TINIEST_BALL = 0.15f;
+   internal const float TINIEST_BALL = 0.10f;
    internal const float LARGEST_BALL = 0.5f;
 
 
