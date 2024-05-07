@@ -3,20 +3,31 @@ using System;
 
 public class Wolf : Node2D
 {
-    int direction = 1;
-    int bounceDirection = 1;
-    float initialHeight;
+    internal  int direction = 1;
+    internal int bounceDirection = 1;
+    private float initialHeight;
+    private AnimatedSprite anim;
+    private DetectionBox db;
+  
+    bool idling = true;
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         initialHeight = GlobalPosition.y;
+        anim = GetNode<AnimatedSprite>("AnimatedSprite");
+        db = GetNode<DetectionBox>("DetectionBox");
+        db.reaction = () => {
+            GD.Print("Swing Activated");
+        };
 
     }
 
     //  // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(float delta)
     {
-        walk();
+        if(idling){
+            walk();
+        }
 
     }
 
@@ -43,4 +54,8 @@ public class Wolf : Node2D
 
     }
 
+}
+
+internal class T
+{
 }
