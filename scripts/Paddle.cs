@@ -19,12 +19,15 @@ public class Paddle : Area2D
 
 
 
-    public void detectBall(Node2D body){
-        if (body is Ball ){
-            Ball ball = (Ball)body;
-            GD.Print("Ball Detected! ");
-            ball.getHit(this.direction, this.magnitude);
+    public void detectBall(Node2D body)
+    {
+        if (!(body is Ball))
+        {
+            return;
         }
+        Ball ball = (Ball)body;
+        ball.getHit(this.direction, this.magnitude);
+         GD.Print(GetType().Name," : Ball detected" );
     }
 
     internal void setDirection(Vector2 dir){

@@ -6,14 +6,12 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("PlayPong")]
 [assembly: InternalsVisibleTo("Wolf")]
 [assembly: InternalsVisibleTo("Paddle")]
-public class Ball : RigidBody2D
-{
-    internal float z = 1; 
+public class Ball : RigidBody2D{
     internal Vector2 anchor;
     private bool playersServe = true; 
     internal bool isServed, isHittable, hadFirstHit;
-    private float prevY ;
-
+    bool bouncedOffCieling;
+    float scalingFactor = Constants.LARGEST_BALL;
     
 
     private CollisionShape2D collider;
@@ -28,17 +26,19 @@ public class Ball : RigidBody2D
     }
   public override void _Process(float delta){
     if( ! isServed){
-        awaitServe();
+        AwaitServe();
     }else if (hadFirstHit){
-        simulateDistance();
+        SimulateDistance();
     }
-    bounceOffTheCieling();
-    checkIfOfBounds();
+    BounceOffTheCieling();
+    CheckIfOfBounds();
+    ScaleBall();
       
   }
 
 
-    private void awaitServe(){
+    private void AwaitServe(){
+        bouncedOffCieling = false;
         if(playersServe){ // wait for spacebar input to serve ball
             GlobalPosition = anchor;
             if (Input.IsActionJustPressed("player_serve")){ // custom mapping for space bar
@@ -49,11 +49,12 @@ public class Ball : RigidBody2D
   
     }
 
-    private void bounceOffTheCieling(){
-        if(GlobalPosition.y < Constants.CIELING_Y){
+    private void BounceOffTheCieling(){
+        if(GlobalPosition.y < Constants.CIELING_Y && !bouncedOffCieling ){
             GD.Print("Bouncing off the cieling");
             ApplyCentralImpulse(Vector2.Down * Constants.BOUNCE_OFF_CIELING_MAGNITUDE);
             isHittable = true;
+            bouncedOffCieling = true;
         }
     }
     private void beServed(){
@@ -78,39 +79,39 @@ public class Ball : RigidBody2D
         }
     }
     
-    void simulateDistance(){
+    void SimulateDistance(){
         int startY = 300;
         int stopY = 20;
         if( GlobalPosition.y < startY && GlobalPosition.y > stopY){
-        float distance = (Math.Abs(GlobalPosition.y - startY)) / startY;
-        float scalingFactor = Constants.LARGEST_BALL - distance * (Constants.LARGEST_BALL - Constants.TINIEST_BALL);
-        scaleBall(scalingFactor);
+        float distance = Math.Abs(GlobalPosition.y - startY) / startY;
+        scalingFactor = Constants.LARGEST_BALL - distance * (Constants.LARGEST_BALL - Constants.TINIEST_BALL);
         }
     }
 
-    private bool checkIfOfBounds(){
+    private bool CheckIfOfBounds(){
         if(GlobalPosition.y > Constants.VIEWPORT_HEIGHT || GlobalPosition.y < Constants.VIEWPORT_MIN  || GlobalPosition.x < Constants.VIEWPORT_MIN  || GlobalPosition.x > Constants.VIEWPORT_WIDTH){
             isServed = false;
-            scaleBall(Constants.LARGEST_BALL);
+            scalingFactor = Constants.LARGEST_BALL;
+            ScaleBall();
             return true;
         } 
         return false;
     }
 
-    void scaleBall(float scalingFactor){
+    void ScaleBall(){
         anim.Scale = new Vector2(1,1) * scalingFactor ;
         collider.Scale = new Vector2(1,1) * scalingFactor ;
     }
 
 
- internal void disableBall(){
+ internal void DisableBall(){
       Hide();
       GetNode<CollisionShape2D>("CollisionShape2D").SetDeferred("disabled", true);
 
    }
 
 
-   internal void enableBall(){
+   internal void EnableBall(){
       Show();
       GetNode<CollisionShape2D>("CollisionShape2D").SetDeferred("disabled", false);
    }

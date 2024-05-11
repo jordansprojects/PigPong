@@ -46,7 +46,7 @@ public class Constants{
 
    /* BALL CONSTANTS */
    internal const int SERVE_MAGNITUDE = 35;
-   internal const int BOUNCE_OFF_CIELING_MAGNITUDE = 25;
+   internal const int BOUNCE_OFF_CIELING_MAGNITUDE = 80;
    internal const int CIELING_Y = 30;
    // used in PlayPong.cs when setting anchor constants
    internal const int ANCHOR_OFFSET_Y = -25;
