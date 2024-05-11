@@ -133,7 +133,7 @@ public class PlayPong : Node2D
    private void disablePaddle(Area2D paddleObj){
       // Hide ball when disabling paddle to reduce glitching appearance when moving paddle & before a serve
       if(ball.isServed == false){ 
-         ball.disableBall();
+         ball.DisableBall();
       }
       paddleObj.Hide();
       paddleObj.GetNode<CollisionShape2D>("CollisionShape2D").SetDeferred("disabled", true);
@@ -146,7 +146,7 @@ public class PlayPong : Node2D
       paddleObj.Show();
 
       ball.anchor = paddleObj.GlobalPosition + Constants.ANCHOR_OFFSET;
-      ball.enableBall();
+      ball.EnableBall();
    }
 
 
