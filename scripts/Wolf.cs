@@ -8,6 +8,8 @@ public class Wolf : Node2D
     private float initialHeight;
     private AnimatedSprite anim;
     private DetectionBox db;
+    private Timer animTimer;
+    private float animationDuration = .20f;
   
     bool idling = true;
     // Called when the node enters the scene tree for the first time.
@@ -16,13 +18,29 @@ public class Wolf : Node2D
         initialHeight = GlobalPosition.y;
         anim = GetNode<AnimatedSprite>("AnimatedSprite");
         db = GetNode<DetectionBox>("DetectionBox");
+        
         db.reaction = () => {
-            GD.Print("Swing Activated");
+
+            if(idling){
+                idling = false;
+                GD.Print(GetType().Name, ": Swing Activated");
+                anim.Play("swing");
+                animTimer.Start();
+            }
         };
+        // Create and configure the timer
+        animTimer = new Timer
+        {
+            WaitTime = animationDuration,
+            OneShot = true
+        };
+        animTimer.Connect("timeout", this, nameof(OnAnimTimerTimeout));
+        AddChild(animTimer);
+
 
     }
 
-    //  // Called every frame. 'delta' is the elapsed time since the previous frame.
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(float delta)
     {
         if(idling){
@@ -54,8 +72,12 @@ public class Wolf : Node2D
 
     }
 
-}
+    // Method called when the animation timer times out
+    private void OnAnimTimerTimeout()
+    {
+        anim.Stop(); // Stop the animation
+        anim.Play("default"); // Play the default animation
+        idling = true; // Set idling back to true
+    }
 
-internal class T
-{
 }

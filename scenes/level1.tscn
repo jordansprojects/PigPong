@@ -174,7 +174,7 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=30]
-extents = Vector2( 101.429, 105.714 )
+extents = Vector2( 170.715, 107.143 )
 
 [sub_resource type="CircleShape2D" id=27]
 radius = 32.3883
@@ -298,7 +298,7 @@ collision_mask = 3
 script = ExtResource( 13 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wolf/DetectionBox"]
-position = Vector2( -157.143, 27.1429 )
+position = Vector2( -87.8573, 25.7141 )
 scale = Vector2( 0.999999, 0.999999 )
 shape = SubResource( 30 )
 
