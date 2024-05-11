@@ -11,7 +11,7 @@ public class Ball : RigidBody2D{
     private bool playersServe = true; 
     internal bool isServed, isHittable, hadFirstHit;
     bool bouncedOffCieling;
-    float scalingFactor = Constants.LARGEST_BALL;
+    internal float scalingFactor = Constants.LARGEST_BALL;
     
 
     private CollisionShape2D collider;
