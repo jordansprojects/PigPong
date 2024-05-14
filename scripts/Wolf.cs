@@ -16,6 +16,7 @@ public class Wolf : Node2D
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        // TO-DO grab reference to center anchor here 
         rnd = new RandomNumberGenerator();
         rnd.Randomize();
         initialHeight = GlobalPosition.y;
