@@ -11,12 +11,15 @@ public class Wolf : Node2D
     private Timer animTimer;
     private float animationDuration = .20f;
 
+    private Node2D anchor;
+
+
     RandomNumberGenerator rnd;
     bool idling = true;
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        // TO-DO grab reference to center anchor here 
+        anchor = GetNode<Node2D>("../CenterAnchor");
         rnd = new RandomNumberGenerator();
         rnd.Randomize();
         initialHeight = GlobalPosition.y;

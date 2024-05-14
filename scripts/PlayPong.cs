@@ -93,6 +93,7 @@ public class PlayPong : Node2D
          bool isLeft = mousePos.x < Constants.RIGHT_BOUNDARY;
          switch( current ){
             case (int)Constants.Pigs.SKULL:
+               (paddle as Paddle).magnitude = 55;
                if(isLeft){
                   hitDirection = Constants.RIGHT_LANE;
                }else{
@@ -100,6 +101,7 @@ public class PlayPong : Node2D
                }
                break;
             case (int)Constants.Pigs.PURPLE:
+            (paddle as Paddle).magnitude = 45;
             if(isLeft){
                   hitDirection = Constants.LEFT_LANE;
             }else if (!isCenter && !isLeft) {

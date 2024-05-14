@@ -45,8 +45,8 @@ public class Constants{
    internal const int BOUNCE_THRESHOLD = 15;
 
 
-   internal const int LEFTMOST_USER_LANE_X =  337;
-   internal const int MIDDLEMOST_USER_LANE_X = 513;
+   internal const int LEFTMOST_USER_LANE_X =  350;
+   internal const int MIDDLEMOST_USER_LANE_X = 600;
    internal const int RIGHTMOST_USER_LANE_X = 700;
 
    internal const int USER_Y  = 383;
