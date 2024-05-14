@@ -174,7 +174,7 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=30]
-extents = Vector2( 170.715, 107.143 )
+extents = Vector2( 179.286, 79.2858 )
 
 [sub_resource type="CircleShape2D" id=27]
 radius = 32.3883
@@ -238,7 +238,7 @@ collision_mask = 3
 script = ExtResource( 12 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pig/Paddle"]
-position = Vector2( 5.71412, -11.4286 )
+position = Vector2( 2.85693, -1.42862 )
 shape = SubResource( 7 )
 
 [node name="PaddleSprite" type="AnimatedSprite" parent="Pig/Paddle"]
@@ -298,12 +298,12 @@ collision_mask = 3
 script = ExtResource( 13 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wolf/DetectionBox"]
-position = Vector2( -87.8573, 25.7141 )
+position = Vector2( -79.2859, -42.1428 )
 scale = Vector2( 0.999999, 0.999999 )
 shape = SubResource( 30 )
 
 [node name="Ball" type="RigidBody2D" parent="."]
-position = Vector2( 519, 197 )
+position = Vector2( 561, 288 )
 z_index = 3
 collision_layer = 2
 collision_mask = 2
@@ -326,3 +326,6 @@ frames = SubResource( 29 )
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="CenterAnchor" type="Node2D" parent="."]
+position = Vector2( 513, 100 )

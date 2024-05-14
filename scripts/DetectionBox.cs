@@ -8,7 +8,7 @@ public class DetectionBox : Area2D
 	// private string b = "text";
 
 	internal Action reaction;
-	internal int magnitude = 55;
+	internal int magnitude = 35;
 	internal Vector2 direction = Vector2.Down;
 
 	// Called when the node enters the scene tree for the first time.
@@ -29,7 +29,7 @@ public class DetectionBox : Area2D
         GD.Print(GetType().Name," : Ball detected" );
 		Ball ball = (Ball)body;
 		GD.Print(GetType().Name," : Ball size = ", ball.scalingFactor );
-		if(ball.scalingFactor <= .75f * Constants.LARGEST_BALL ){
+		if(ball.scalingFactor <= .85f * Constants.LARGEST_BALL ){
 			GD.Print(GetType().Name," : Hitting ball" );
 			reaction();
 			ball.getHit(this.direction, this.magnitude);

@@ -36,13 +36,26 @@ public class Constants{
    internal static Vector2  CENTER_LANE = new Vector2(LEFT_LANE.x + LANE_PADDING, LANE_DEST_Y);
    internal static Vector2 RIGHT_LANE = new Vector2(CENTER_LANE.x + LANE_PADDING, LANE_DEST_Y);
  
-   /* WOLF CONSTANTS */
+   /* OPPONENT CONSTANTS */
    const int BOUNDARY_BUFFER = 80;
    internal const int STOP_LEFT = LEFT_BOUNDARY + BOUNDARY_BUFFER;
    internal const int STOP_RIGHT = RIGHT_BOUNDARY - BOUNDARY_BUFFER;
    internal const float WALK_MAGNITUDE = 0.25f; 
    internal const float BOUNCE_MAGNITUDE = 0.5f;
    internal const int BOUNCE_THRESHOLD = 15;
+
+
+   internal const int LEFTMOST_USER_LANE_X =  337;
+   internal const int MIDDLEMOST_USER_LANE_X = 513;
+   internal const int RIGHTMOST_USER_LANE_X = 700;
+
+   internal const int USER_Y  = 383;
+
+   internal static Vector2 USER_LEFT_LANE = new Vector2 (LEFTMOST_USER_LANE_X, USER_Y);
+   internal static Vector2 USER_CENTER_LANE = new Vector2 (MIDDLEMOST_USER_LANE_X, USER_Y);
+   internal static Vector2 USER_RIGHT_LANE = new Vector2 (RIGHTMOST_USER_LANE_X, USER_Y);
+
+    internal static List<Vector2> USER_DESTINATION_VECTORS = new List<Vector2>{ USER_LEFT_LANE, USER_CENTER_LANE, USER_RIGHT_LANE,  };
 
    /* BALL CONSTANTS */
    internal const int SERVE_MAGNITUDE = 35;
@@ -55,6 +68,7 @@ public class Constants{
 
    internal const float TINIEST_BALL = 0.10f;
    internal const float LARGEST_BALL = 0.5f;
+
 
 
 
