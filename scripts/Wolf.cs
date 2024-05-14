@@ -10,17 +10,24 @@ public class Wolf : Node2D
     private DetectionBox db;
     private Timer animTimer;
     private float animationDuration = .20f;
-  
+
+    RandomNumberGenerator rnd;
     bool idling = true;
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        // TO-DO grab reference to center anchor here 
+        rnd = new RandomNumberGenerator();
+        rnd.Randomize();
         initialHeight = GlobalPosition.y;
         anim = GetNode<AnimatedSprite>("AnimatedSprite");
         db = GetNode<DetectionBox>("DetectionBox");
         
         db.reaction = () => {
-
+            uint randomIndex = rnd.Randi() % 3;
+            GD.Print(GetType().Name, ": Random Index Chosen ", randomIndex);
+            Vector2 dest = Constants.USER_DESTINATION_VECTORS[(int)randomIndex];
+            db.direction = (dest - GlobalPosition).Normalized();
             if(idling){
                 idling = false;
                 GD.Print(GetType().Name, ": Swing Activated");
