@@ -11,7 +11,7 @@ public class Wolf : Node2D
     private Timer animTimer;
     private float animationDuration = .20f;
 
-    private Node2D anchor;
+    private Ball anchor;
 
 
     RandomNumberGenerator rnd;
@@ -19,7 +19,7 @@ public class Wolf : Node2D
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        anchor = GetNode<Node2D>("../CenterAnchor");
+        anchor = GetNode<Ball>("../Ball");
         rnd = new RandomNumberGenerator();
         rnd.Randomize();
         initialHeight = GlobalPosition.y;
@@ -30,7 +30,7 @@ public class Wolf : Node2D
             uint randomIndex = rnd.Randi() % 3;
             GD.Print(GetType().Name, ": Random Index Chosen ", randomIndex);
             Vector2 dest = Constants.USER_DESTINATION_VECTORS[(int)randomIndex];
-            db.direction = (dest - GlobalPosition).Normalized();
+            db.direction = (dest - anchor.GlobalPosition).Normalized();
             if(idling){
                 idling = false;
                 GD.Print(GetType().Name, ": Swing Activated");

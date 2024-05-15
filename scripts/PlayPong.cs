@@ -7,11 +7,13 @@ public class PlayPong : Node2D
    private Ball ball;
    private int current = (int)Constants.Pigs.PURPLE;
    private int left, right;
+   RandomNumberGenerator rnd;
 
    AnimatedSprite pigCenterAnim, pigLeftAnim, pigRightAnim, paddleSprite;
    // Called when the node enters the scene tree for the first time.
-   public override void _Ready()
-   {
+   public override void _Ready(){
+      rnd = new RandomNumberGenerator();
+      rnd.Randomize();
       getNodeReferences();
       
       // set pig indicies 
@@ -109,8 +111,10 @@ public class PlayPong : Node2D
                }
                break;
             case (int)Constants.Pigs.SUPER:
-            // Select random hit direction
-
+            uint randomIndex = rnd.Randi() % 3;
+            hitDirection = Constants.LANES[(int)randomIndex];
+            GD.Print(GetType().Name, ": Random Index Chosen ", randomIndex);
+            (paddle as Paddle).magnitude = 65;
             break;
          }
          (paddle as Paddle).setDirection((hitDirection - paddle.GlobalPosition).Normalized());

@@ -48,7 +48,7 @@ animations = [ {
 } ]
 
 [sub_resource type="CapsuleShape2D" id=7]
-radius = 71.4285
+radius = 66.6666
 height = 0.0
 
 [sub_resource type="AtlasTexture" id=16]
@@ -174,7 +174,7 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=30]
-extents = Vector2( 171.429, 57.8572 )
+extents = Vector2( 299.237, 114.179 )
 
 [sub_resource type="CircleShape2D" id=27]
 radius = 32.3883
@@ -195,33 +195,30 @@ animations = [ {
 [node name="Node2D" type="Node2D"]
 
 [node name="Background" type="Sprite" parent="."]
-position = Vector2( 515, 302 )
-scale = Vector2( 0.7, 0.7 )
+position = Vector2( 515, 298 )
+scale = Vector2( 0.55, 0.56 )
 texture = ExtResource( 3 )
 
 [node name="Table" type="Sprite" parent="."]
 position = Vector2( 521, 318 )
-scale = Vector2( 0.631771, 0.559259 )
+scale = Vector2( 0.6, 0.6 )
 z_index = 1
 texture = ExtResource( 2 )
 
 [node name="Chairs" type="Sprite" parent="."]
-position = Vector2( 495, 504 )
+position = Vector2( 492, 514 )
 scale = Vector2( 0.6, 0.5 )
 z_index = 9
 texture = ExtResource( 1 )
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-position = Vector2( 643, 24 )
+position = Vector2( 630, 40 )
 scale = Vector2( 0.5, 0.5 )
 stream = ExtResource( 4 )
 autoplay = true
 
 [node name="Pig" type="Node2D" parent="."]
-position = Vector2( 524, 474 )
+position = Vector2( 501, 493 )
 scale = Vector2( 0.6, 0.6 )
 script = ExtResource( 6 )
 
@@ -229,7 +226,7 @@ script = ExtResource( 6 )
 position = Vector2( -2.85718, -82.8571 )
 z_index = 5
 frames = SubResource( 3 )
-animation = "Super"
+animation = "Purple"
 
 [node name="Paddle" type="Area2D" parent="Pig"]
 position = Vector2( 227.143, -87.1428 )
@@ -239,17 +236,15 @@ collision_mask = 3
 script = ExtResource( 12 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pig/Paddle"]
-position = Vector2( 4.28552, -11.4286 )
+position = Vector2( 2.85693, -16.1906 )
+z_index = 3
 shape = SubResource( 7 )
 
 [node name="PaddleSprite" type="AnimatedSprite" parent="Pig/Paddle"]
-position = Vector2( -14.2857, 28.5714 )
+position = Vector2( -18.8097, 17.1427 )
 z_index = 4
 frames = SubResource( 6 )
 animation = "Super"
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="CenterPaddle" parent="Pig" instance=ExtResource( 7 )]
 position = Vector2( 28.5714, -252.857 )
@@ -261,22 +256,23 @@ __meta__ = {
 }
 
 [node name="SeatedPigLeft" type="AnimatedSprite" parent="."]
-position = Vector2( 276, 453 )
+position = Vector2( 270.6, 449.3 )
 scale = Vector2( 0.6, 0.6 )
 z_index = 7
 frames = SubResource( 11 )
 animation = "Skull"
 
 [node name="SeatedPigRight" type="AnimatedSprite" parent="."]
-position = Vector2( 797, 445 )
+position = Vector2( 762.6, 451.3 )
 scale = Vector2( 0.6, 0.6 )
 z_index = 7
 frames = SubResource( 12 )
 animation = "Skull"
+flip_h = true
 
 [node name="Wolf" type="Node2D" parent="."]
-position = Vector2( 513, 99 )
-scale = Vector2( 0.684, 0.687 )
+position = Vector2( 504, 108 )
+scale = Vector2( 0.9, 0.9 )
 script = ExtResource( 9 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Wolf"]
@@ -294,12 +290,12 @@ collision_mask = 3
 script = ExtResource( 13 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wolf/DetectionBox"]
-position = Vector2( -71.4286, -0.714264 )
+position = Vector2( -35.7375, -21.0254 )
 scale = Vector2( 0.684, 0.687 )
 shape = SubResource( 30 )
 
 [node name="Ball" type="RigidBody2D" parent="."]
-position = Vector2( 566, 315 )
+position = Vector2( 657, 407 )
 z_index = 3
 collision_layer = 2
 collision_mask = 2
@@ -322,6 +318,3 @@ frames = SubResource( 29 )
 __meta__ = {
 "_edit_lock_": true
 }
-
-[node name="CenterAnchor" type="Node2D" parent="."]
-position = Vector2( 513, 100 )
