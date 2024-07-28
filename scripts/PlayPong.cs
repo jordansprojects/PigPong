@@ -74,8 +74,10 @@ public class PlayPong : Node2D
       if (isCenter && isNotExcludedFromCenter || isForcedToCenter) {
          disablePaddle(paddle);
          enablePaddle(centerPaddle);
+         configureHitDirection(mousePos, isCenter);
       }
       else{
+         configureHitDirection(mousePos, isCenter);
          enablePaddle(paddle);
          disablePaddle(centerPaddle);
          // flip if the cursor is on the side of the player that the player isnt facing
@@ -83,41 +85,40 @@ public class PlayPong : Node2D
          if (shouldFlip){ 
             Scale = new Vector2(Scale.x * -1, Scale.y);
          }
-         configureHitDirection(mousePos, isCenter);
+         
          }
+         
    }
 
    /*
       controlPaddle helper function
    */
    private void configureHitDirection(Vector2 mousePos, bool isCenter){
-      Vector2 hitDirection = Constants.CENTER_LANE;
          bool isLeft = mousePos.x < Constants.RIGHT_BOUNDARY;
          switch( current ){
             case (int)Constants.Pigs.SKULL:
-               (paddle as Paddle).magnitude = 55;
+               (paddle as Paddle).magnitude = 75;
                if(isLeft){
-                  hitDirection = Constants.RIGHT_LANE;
+                  (paddle as Paddle).setDirection((Constants.RIGHT_LANE- paddle.GlobalPosition).Normalized());
                }else{
-                  hitDirection = Constants.LEFT_LANE;
+                  (paddle as Paddle).setDirection((Constants.LEFT_LANE- paddle.GlobalPosition).Normalized());
                }
                break;
             case (int)Constants.Pigs.PURPLE:
-            (paddle as Paddle).magnitude = 45;
-            if(isLeft){
-                  hitDirection = Constants.LEFT_LANE;
-            }else if (!isCenter && !isLeft) {
-                  hitDirection = Constants.RIGHT_LANE;  
-               }
-               break;
+               (paddle as Paddle).magnitude = 35;
+               if(isLeft){
+                     (paddle as Paddle).setDirection((Constants.LEFT_LANE- paddle.GlobalPosition).Normalized());
+               }else if (!isCenter && !isLeft) {
+                     (paddle as Paddle).setDirection((Constants.RIGHT_LANE- paddle.GlobalPosition).Normalized());
+                  }
+                  break;
             case (int)Constants.Pigs.SUPER:
-            uint randomIndex = rnd.Randi() % 3;
-            hitDirection = Constants.LANES[(int)randomIndex];
-            GD.Print(GetType().Name, ": Random Index Chosen ", randomIndex);
-            (paddle as Paddle).magnitude = 65;
+               (paddle as Paddle).magnitude = 86;
+               int randomIndex = rnd.RandiRange(0,2);
+               (paddle as Paddle).setDirection((Constants.LANES[randomIndex]- paddle.GlobalPosition).Normalized());
             break;
          }
-         (paddle as Paddle).setDirection((hitDirection - paddle.GlobalPosition).Normalized());
+         
       }
       
 

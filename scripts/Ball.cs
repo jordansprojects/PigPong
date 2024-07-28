@@ -1,25 +1,32 @@
 using Godot;
 using System;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 [assembly: InternalsVisibleTo("PlayPong")]
 [assembly: InternalsVisibleTo("Wolf")]
 [assembly: InternalsVisibleTo("Paddle")]
+[assembly: InternalsVisibleTo("ScoreText")]
+
+/*
+    The Ball functions as both the physical ball and the GameManager 
+ */
 public class Ball : RigidBody2D{
     internal Vector2 anchor;
     private bool playersServe = true; 
     internal bool isServed, isHittable, hadFirstHit;
     bool bouncedOffCieling;
     internal float scalingFactor = Constants.LARGEST_BALL;
+    internal static int []points = {0,0};
     
 
     private CollisionShape2D collider;
     private AnimatedSprite anim ;
+    private ScoreText st; 
 
     public override void _Ready(){
         collider = GetNode<CollisionShape2D>("CollisionShape2D");
         anim = GetNode<AnimatedSprite >("AnimatedSprite");
+        st = GetNode<ScoreText>("../ScoreText");
         isServed = isHittable = hadFirstHit = false;
 
         
@@ -36,7 +43,6 @@ public class Ball : RigidBody2D{
       
   }
 
-
     private void AwaitServe(){
         bouncedOffCieling = false;
         if(playersServe){ // wait for spacebar input to serve ball
@@ -45,8 +51,6 @@ public class Ball : RigidBody2D{
                 beServed();
             }
         }
-
-  
     }
 
     private void BounceOffTheCieling(){
@@ -65,15 +69,11 @@ public class Ball : RigidBody2D{
         hadFirstHit = false;
         LinearVelocity = Vector2.Zero;
         ApplyCentralImpulse(Vector2.Up * Constants.SERVE_MAGNITUDE);
-
-
-       
     }
 
     internal void getHit(Vector2 impulseToApply, int mag){
         if (isHittable){
             LinearVelocity = Vector2.Zero;
-            GD.Print("Hitting ball in direction :" + impulseToApply);
             ApplyCentralImpulse(impulseToApply * mag );
             hadFirstHit = true;
         }
@@ -93,7 +93,18 @@ public class Ball : RigidBody2D{
             isServed = false;
             scalingFactor = Constants.LARGEST_BALL;
             ScaleBall();
-            return true;
+
+            if(GlobalPosition.y > Constants.VIEWPORT_HEIGHT){
+                // Pigs get a point
+                ++points[1]; 
+            }
+            if(GlobalPosition.y < Constants.VIEWPORT_MIN){
+                // Wolf gets a point
+                ++points[0];
+            }
+            st.updateText(points);
+         return true;
+
         } 
         return false;
     }

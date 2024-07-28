@@ -36,8 +36,7 @@ public class Constants{
    internal static Vector2 LEFT_LANE = new Vector2(LANE_DEST_START_X, LANE_DEST_Y);
    internal static Vector2  CENTER_LANE = new Vector2(LEFT_LANE.x + LANE_PADDING, LANE_DEST_Y);
    internal static Vector2 RIGHT_LANE = new Vector2(CENTER_LANE.x + LANE_PADDING, LANE_DEST_Y);
-
-   internal static List<Vector2> LANES = new List<Vector2>{ LEFT_LANE, CENTER_LANE, RIGHT_LANE};
+   internal static Vector2 [] LANES = { LEFT_LANE, CENTER_LANE, RIGHT_LANE};
  
    /* OPPONENT CONSTANTS */
    const int BOUNDARY_BUFFER = 50;
