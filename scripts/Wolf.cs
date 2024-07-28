@@ -10,9 +10,7 @@ public class Wolf : Node2D
     private DetectionBox db;
     private Timer animTimer;
     private float animationDuration = .20f;
-
     private Ball anchor;
-
 
     RandomNumberGenerator rnd;
     bool idling = true;
@@ -27,9 +25,9 @@ public class Wolf : Node2D
         db = GetNode<DetectionBox>("DetectionBox");
         
         db.reaction = () => {
-            uint randomIndex = rnd.Randi() % 3;
+            int randomIndex = 1; // (int)(rnd.Randi() % 3);
             GD.Print(GetType().Name, ": Random Index Chosen ", randomIndex);
-            Vector2 dest = Constants.USER_DESTINATION_VECTORS[(int)randomIndex];
+            Vector2 dest = Constants.USER_DESTINATION_VECTORS[randomIndex];
             db.direction = (dest - anchor.GlobalPosition).Normalized();
             if(idling){
                 idling = false;

@@ -3,21 +3,17 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("PlayPong")]
 public class Paddle : Area2D
 {
-    Vector2 direction = Vector2.Up;
+    Vector2 direction;
     internal int magnitude = 35;
+
+    PlayPong playerController;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready(){
         // connect signal to paddle node
         Connect("body_entered", this, "detectBall");
+        playerController = GetNode<PlayPong>("../../Pig");
     }
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
-//  {
-//      
-//  }
-
-
 
     public void detectBall(Node2D body)
     {
@@ -25,9 +21,11 @@ public class Paddle : Area2D
         {
             return;
         }
+
         Ball ball = (Ball)body;
-        ball.getHit(this.direction, this.magnitude);
-         GD.Print(GetType().Name," : Ball detected" );
+        playerController.setHitDirection();
+        ball.getHit(direction, magnitude);
+        GD.Print(GetType().Name , ": Ball Detected. Hitting in the direction of : " + direction * magnitude);
     }
 
     internal void setDirection(Vector2 dir){
