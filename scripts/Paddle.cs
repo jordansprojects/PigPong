@@ -1,5 +1,6 @@
 using Godot;
 using System.Runtime.CompilerServices;
+using System.Runtime.Remoting.Channels;
 [assembly: InternalsVisibleTo("PlayPong")]
 public class Paddle : Area2D
 {
@@ -24,8 +25,9 @@ public class Paddle : Area2D
 
         Ball ball = (Ball)body;
         playerController.setHitDirection();
+
         ball.getHit(direction, magnitude);
-        GD.Print(GetType().Name , ": Ball Detected. Hitting in the direction of : " + direction * magnitude);
+        GD.Print(GetType().Name , ": Ball Detected. Hitting in the direction of : " + direction + " with a magninude of  "  + magnitude);
     }
 
     internal void setDirection(Vector2 dir){

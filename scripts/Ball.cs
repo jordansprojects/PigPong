@@ -17,8 +17,6 @@ public class Ball : RigidBody2D{
     bool bouncedOffCieling;
     internal float scalingFactor = Constants.LARGEST_BALL;
     internal static int []points = {0,0};
-    
-
     private CollisionShape2D collider;
     private AnimatedSprite anim ;
     private ScoreText st; 

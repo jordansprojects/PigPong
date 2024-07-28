@@ -19,6 +19,7 @@ public class PlayPong : Node2D
       rnd = new RandomNumberGenerator();
       rnd.Randomize();
       getNodeReferences();
+      (centerPaddle as Paddle)?.setDirection((Constants.CENTER_LANE - GlobalPosition).Normalized());
       
       // set pig indicies 
       left = current + 2;
@@ -26,7 +27,7 @@ public class PlayPong : Node2D
       
       // ensure pigs begin with proper sprite selected
       changePigAnims(); 
-      (centerPaddle as Paddle).setDirection((Constants.CENTER_LANE- GlobalPosition).Normalized());
+
 
    }
 
@@ -122,36 +123,40 @@ public class PlayPong : Node2D
       Sets direction of the hit based on which pig is chosen and where the mouse is.
    */
    internal void setHitDirection(){
+      Vector2 centerPaddleDir = Constants.CENTER_LANE;
+      Vector2 sidePaddleDir =  Constants.CENTER_LANE;
       Vector2 mousPos = GetViewport().GetMousePosition();
          bool isLeft = mousPos.x < Constants.RIGHT_BOUNDARY;
          switch( current ){
             case (int)Constants.Pigs.SKULL:
+               GD.Print("Skull");
                (paddle as Paddle).magnitude = 75;
                if(isLeft){
-                  (paddle as Paddle).setDirection((Constants.RIGHT_LANE- paddle.GlobalPosition).Normalized());
+                  sidePaddleDir = Constants.RIGHT_LANE;
                }else{
-                  (paddle as Paddle).setDirection((Constants.LEFT_LANE- paddle.GlobalPosition).Normalized());
+                  sidePaddleDir = Constants.LEFT_LANE;
                }
                break;
             case (int)Constants.Pigs.PURPLE:
-               (centerPaddle as Paddle).setDirection((Constants.CENTER_LANE - paddle.GlobalPosition).Normalized());
+                GD.Print("Purple");
                (centerPaddle as Paddle).magnitude = 35;
                (paddle as Paddle).magnitude = 35;
                if(isLeft){
-                     (paddle as Paddle).setDirection((Constants.LEFT_LANE- paddle.GlobalPosition).Normalized());
+                     sidePaddleDir = Constants.LEFT_LANE;
                }else if (!isCenter && !isLeft) {
-                     (paddle as Paddle).setDirection((Constants.RIGHT_LANE- paddle.GlobalPosition).Normalized());
+                     sidePaddleDir = Constants.RIGHT_LANE;
                }
                break;
             case (int)Constants.Pigs.SUPER:
+            GD.Print("Super");
                (centerPaddle as Paddle).magnitude = 90;
                float randomFloat = rnd.Randf();
-               Vector2  hitDir = ( randomFloat <  0.5 )? Constants.LEFT_LANE : Constants.RIGHT_LANE;
-               GD.Print(GetType().Name , " : Direction Chosen : ", hitDir , "Random Float Generated : ", randomFloat );
-               (centerPaddle as Paddle).setDirection((hitDir - paddle.GlobalPosition).Normalized());
+               centerPaddleDir = ( randomFloat <  0.5 )? Constants.LEFT_LANE : Constants.RIGHT_LANE;
+               GD.Print(GetType().Name , " : Direction Chosen : ", centerPaddleDir , "Random Float Generated : ", randomFloat );
                break;
          }
-         
+         (centerPaddle as Paddle).setDirection((centerPaddleDir- paddle.GlobalPosition).Normalized());
+         (paddle as Paddle).setDirection((sidePaddleDir- paddle.GlobalPosition).Normalized());
       }
   
 

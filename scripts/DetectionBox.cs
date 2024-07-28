@@ -17,12 +17,9 @@ public class DetectionBox : Area2D
 		 Connect("body_entered", this, "detectBall");
 		
 	}
-
-
     public void detectBall(Node2D body)
     {
-        if (!(body is Ball))
-        {
+        if (!(body is Ball)){
             return;
         }
 		
@@ -35,7 +32,6 @@ public class DetectionBox : Area2D
 			ball.getHit(this.direction, this.magnitude);
 		}
     }
-
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
 //  public override void _Process(float delta)
