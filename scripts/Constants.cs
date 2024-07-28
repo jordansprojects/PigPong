@@ -32,22 +32,24 @@ public class Constants{
    internal const int LANE_DEST_START_X = 430;
    internal const int LANE_PADDING = 70;
 
+   // These are the directions that players can hit toward
    internal static Vector2 LEFT_LANE = new Vector2(LANE_DEST_START_X, LANE_DEST_Y);
    internal static Vector2  CENTER_LANE = new Vector2(LEFT_LANE.x + LANE_PADDING, LANE_DEST_Y);
    internal static Vector2 RIGHT_LANE = new Vector2(CENTER_LANE.x + LANE_PADDING, LANE_DEST_Y);
+   internal static Vector2 [] LANES = { LEFT_LANE, CENTER_LANE, RIGHT_LANE};
  
    /* OPPONENT CONSTANTS */
-   const int BOUNDARY_BUFFER = 80;
+   const int BOUNDARY_BUFFER = 50;
    internal const int STOP_LEFT = LEFT_BOUNDARY + BOUNDARY_BUFFER;
    internal const int STOP_RIGHT = RIGHT_BOUNDARY - BOUNDARY_BUFFER;
    internal const float WALK_MAGNITUDE = 0.25f; 
-   internal const float BOUNCE_MAGNITUDE = 0.5f;
-   internal const int BOUNCE_THRESHOLD = 15;
+   internal const float BOUNCE_MAGNITUDE = 0.3f;
+   internal const int BOUNCE_THRESHOLD = 10;
 
 
-   internal const int LEFTMOST_USER_LANE_X =  337;
-   internal const int MIDDLEMOST_USER_LANE_X = 513;
-   internal const int RIGHTMOST_USER_LANE_X = 700;
+   internal const int LEFTMOST_USER_LANE_X =  350;
+   internal const int MIDDLEMOST_USER_LANE_X = 509;
+   internal const int RIGHTMOST_USER_LANE_X = 657;
 
    internal const int USER_Y  = 383;
 
@@ -66,7 +68,7 @@ public class Constants{
    internal static Vector2 ANCHOR_OFFSET = new Vector2(0, ANCHOR_OFFSET_Y);
 
 
-   internal const float TINIEST_BALL = 0.10f;
+   internal const float TINIEST_BALL = 0.05f;
    internal const float LARGEST_BALL = 0.5f;
 
 

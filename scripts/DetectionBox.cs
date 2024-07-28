@@ -8,7 +8,7 @@ public class DetectionBox : Area2D
 	// private string b = "text";
 
 	internal Action reaction;
-	internal int magnitude = 35;
+	internal int magnitude = 55;
 	internal Vector2 direction = Vector2.Down;
 
 	// Called when the node enters the scene tree for the first time.

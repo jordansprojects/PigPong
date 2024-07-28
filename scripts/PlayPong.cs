@@ -7,11 +7,13 @@ public class PlayPong : Node2D
    private Ball ball;
    private int current = (int)Constants.Pigs.PURPLE;
    private int left, right;
+   RandomNumberGenerator rnd;
 
    AnimatedSprite pigCenterAnim, pigLeftAnim, pigRightAnim, paddleSprite;
    // Called when the node enters the scene tree for the first time.
-   public override void _Ready()
-   {
+   public override void _Ready(){
+      rnd = new RandomNumberGenerator();
+      rnd.Randomize();
       getNodeReferences();
       
       // set pig indicies 
@@ -72,8 +74,10 @@ public class PlayPong : Node2D
       if (isCenter && isNotExcludedFromCenter || isForcedToCenter) {
          disablePaddle(paddle);
          enablePaddle(centerPaddle);
+         configureHitDirection(mousePos, isCenter);
       }
       else{
+         configureHitDirection(mousePos, isCenter);
          enablePaddle(paddle);
          disablePaddle(centerPaddle);
          // flip if the cursor is on the side of the player that the player isnt facing
@@ -81,37 +85,40 @@ public class PlayPong : Node2D
          if (shouldFlip){ 
             Scale = new Vector2(Scale.x * -1, Scale.y);
          }
-         configureHitDirection(mousePos, isCenter);
+         
          }
+         
    }
 
    /*
       controlPaddle helper function
    */
    private void configureHitDirection(Vector2 mousePos, bool isCenter){
-      Vector2 hitDirection = Constants.CENTER_LANE;
          bool isLeft = mousePos.x < Constants.RIGHT_BOUNDARY;
          switch( current ){
             case (int)Constants.Pigs.SKULL:
+               (paddle as Paddle).magnitude = 75;
                if(isLeft){
-                  hitDirection = Constants.RIGHT_LANE;
+                  (paddle as Paddle).setDirection((Constants.RIGHT_LANE- paddle.GlobalPosition).Normalized());
                }else{
-                  hitDirection = Constants.LEFT_LANE;
+                  (paddle as Paddle).setDirection((Constants.LEFT_LANE- paddle.GlobalPosition).Normalized());
                }
                break;
             case (int)Constants.Pigs.PURPLE:
-            if(isLeft){
-                  hitDirection = Constants.LEFT_LANE;
-            }else if (!isCenter && !isLeft) {
-                  hitDirection = Constants.RIGHT_LANE;  
-               }
-               break;
+               (paddle as Paddle).magnitude = 35;
+               if(isLeft){
+                     (paddle as Paddle).setDirection((Constants.LEFT_LANE- paddle.GlobalPosition).Normalized());
+               }else if (!isCenter && !isLeft) {
+                     (paddle as Paddle).setDirection((Constants.RIGHT_LANE- paddle.GlobalPosition).Normalized());
+                  }
+                  break;
             case (int)Constants.Pigs.SUPER:
-            // Select random hit direction
-
+               (paddle as Paddle).magnitude = 86;
+               int randomIndex = rnd.RandiRange(0,2);
+               (paddle as Paddle).setDirection((Constants.LANES[randomIndex]- paddle.GlobalPosition).Normalized());
             break;
          }
-         (paddle as Paddle).setDirection((hitDirection - paddle.GlobalPosition).Normalized());
+         
       }
       
 
