@@ -55,14 +55,12 @@ public class Ball : RigidBody2D{
 
     private void BounceOffTheCieling(){
         if(GlobalPosition.y < Constants.CIELING_Y && !bouncedOffCieling ){
-            GD.Print("Bouncing off the cieling");
             ApplyCentralImpulse(Vector2.Down * Constants.BOUNCE_OFF_CIELING_MAGNITUDE);
             isHittable = true;
             bouncedOffCieling = true;
         }
     }
     private void beServed(){
-        GD.Print("Ball is being served");
         // apply impulse before ball can be hit by other objects
         isServed = true;
         isHittable = false;
