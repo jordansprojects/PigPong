@@ -7,13 +7,13 @@ public class Paddle : Area2D
     Vector2 direction;
     internal int magnitude = 35;
 
-    PlayPong playerController;
+    PlayerController playerController;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready(){
         // connect signal to paddle node
         Connect("body_entered", this, "detectBall");
-        playerController = GetNode<PlayPong>("../../Pig");
+        playerController = GetNode<PlayerController>("../../Pig");
     }
 
     public void detectBall(Node2D body)

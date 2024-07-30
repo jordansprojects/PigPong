@@ -25,7 +25,7 @@ public class Wolf : Node2D
         db = GetNode<DetectionBox>("DetectionBox");
         
         db.reaction = () => {
-            int randomIndex = 1; // (int)(rnd.Randi() % 3);
+            int randomIndex = (int)(rnd.Randi() % 3);
             GD.Print(GetType().Name, ": Random Index Chosen ", randomIndex);
             Vector2 dest = Constants.USER_DESTINATION_VECTORS[randomIndex];
             db.direction = (dest - anchor.GlobalPosition).Normalized();
@@ -52,12 +52,12 @@ public class Wolf : Node2D
     public override void _Process(float delta)
     {
         if(idling){
-            walk();
+            walkAimlessly();
         }
 
     }
 
-    private void walk()
+    private void walkAimlessly()
     {
         bool switchRight = Position.x <= Constants.STOP_LEFT;
         bool switchLeft = Position.x >= Constants.STOP_RIGHT;
@@ -68,6 +68,16 @@ public class Wolf : Node2D
             direction *= -1;
         }
 
+        bobUpAndDown();
+        GlobalPosition = new Vector2(GlobalPosition.x + (direction * Constants.WALK_MAGNITUDE), GlobalPosition.y + (bounceDirection * Constants.BOUNCE_MAGNITUDE ));
+
+    }
+
+    private void walkTowardsBall(){
+
+    }
+
+    private void bobUpAndDown(){
         bool goDown = GlobalPosition.y > (initialHeight + Constants.BOUNCE_THRESHOLD);
         bool goUp = GlobalPosition.y <= (initialHeight - Constants.BOUNCE_THRESHOLD);
 
@@ -75,9 +85,6 @@ public class Wolf : Node2D
         {
             bounceDirection *= -1;
         }
-
-        GlobalPosition = new Vector2(GlobalPosition.x + (direction * Constants.WALK_MAGNITUDE), GlobalPosition.y + (bounceDirection * Constants.BOUNCE_MAGNITUDE ));
-
     }
 
     // Method called when the animation timer times out

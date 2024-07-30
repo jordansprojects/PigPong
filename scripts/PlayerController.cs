@@ -3,9 +3,9 @@ using Godot;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("Paddle")]
-public class PlayPong : Node2D
+public class PlayerController : Node2D
 {
-   private Area2D paddle, centerPaddle;
+   private Area2D paddle, purpleCenterPaddle, superCenterPaddle;
    private Ball ball;
    private int current = (int)Constants.Pigs.PURPLE;
    private int left, right;
@@ -19,7 +19,12 @@ public class PlayPong : Node2D
       rnd = new RandomNumberGenerator();
       rnd.Randomize();
       getNodeReferences();
-      (centerPaddle as Paddle)?.setDirection((Constants.CENTER_LANE - GlobalPosition).Normalized());
+      
+      // set hit direction for purple pig's center paddle, and initial hit direction for super pig's center paddle
+      (purpleCenterPaddle as Paddle)?.setDirection((Constants.CENTER_LANE - GlobalPosition).Normalized());
+      (purpleCenterPaddle as Paddle).magnitude = 35;
+      (superCenterPaddle as Paddle)?.setDirection((Constants.RIGHT_LANE - GlobalPosition).Normalized());
+      (superCenterPaddle as Paddle).magnitude = 80;
       
       // set pig indicies 
       left = current + 2;
@@ -41,7 +46,8 @@ public class PlayPong : Node2D
    }
    private void getNodeReferences(){
       paddle = GetNode<Area2D>("Paddle");
-      centerPaddle = GetNode<Area2D>("CenterPaddle");
+      purpleCenterPaddle = GetNode<Area2D>("PurpleCenterPaddle");
+      superCenterPaddle = GetNode<Area2D>("SuperCenterPaddle");
       pigLeftAnim = GetNode<AnimatedSprite>("../SeatedPigLeft");
       pigRightAnim = GetNode<AnimatedSprite>("../SeatedPigRight");
       pigCenterAnim = GetNode<AnimatedSprite>("Pigsprite");
@@ -105,11 +111,17 @@ public class PlayPong : Node2D
       bool isForcedToCenter = (Constants.Pigs)current == Constants.Pigs.SUPER;
       if (isCenter && isNotExcludedFromCenter || isForcedToCenter) {
          disablePaddle(paddle);
-         enablePaddle(centerPaddle);
+         if (current == (int)Constants.Pigs.PURPLE){
+            enablePaddle(purpleCenterPaddle);
+         }else{
+            enablePaddle(superCenterPaddle);
+         }
+         
       }
       else{
          enablePaddle(paddle);
-         disablePaddle(centerPaddle);
+         disablePaddle(superCenterPaddle);
+         disablePaddle(purpleCenterPaddle);
          // flip if the cursor is on the side of the player that the player isnt facing
          bool shouldFlip = mousePos.x < GlobalPosition.x && Scale.x > 0 || mousePos.x > GlobalPosition.x && Scale.x < 0;
          if (shouldFlip){ 
@@ -130,7 +142,7 @@ public class PlayPong : Node2D
          switch( current ){
             case (int)Constants.Pigs.SKULL:
                GD.Print("Skull");
-               (paddle as Paddle).magnitude = 75;
+               (paddle as Paddle).magnitude = 65;
                if(isLeft){
                   sidePaddleDir = Constants.RIGHT_LANE;
                }else{
@@ -139,7 +151,6 @@ public class PlayPong : Node2D
                break;
             case (int)Constants.Pigs.PURPLE:
                 GD.Print("Purple");
-               (centerPaddle as Paddle).magnitude = 35;
                (paddle as Paddle).magnitude = 35;
                if(isLeft){
                      sidePaddleDir = Constants.LEFT_LANE;
@@ -149,13 +160,13 @@ public class PlayPong : Node2D
                break;
             case (int)Constants.Pigs.SUPER:
             GD.Print("Super");
-               (centerPaddle as Paddle).magnitude = 90;
                float randomFloat = rnd.Randf();
                centerPaddleDir = ( randomFloat <  0.5 )? Constants.LEFT_LANE : Constants.RIGHT_LANE;
+               (superCenterPaddle as Paddle).setDirection((centerPaddleDir- paddle.GlobalPosition).Normalized());
                GD.Print(GetType().Name , " : Direction Chosen : ", centerPaddleDir , "Random Float Generated : ", randomFloat );
                break;
          }
-         (centerPaddle as Paddle).setDirection((centerPaddleDir- paddle.GlobalPosition).Normalized());
+
          (paddle as Paddle).setDirection((sidePaddleDir- paddle.GlobalPosition).Normalized());
       }
   
